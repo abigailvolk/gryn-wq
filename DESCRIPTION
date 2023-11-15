@@ -1,14 +1,16 @@
 Package: grynwq
-Title: What the Package Does (One Line, Title Case)
+Title: Pulls GRYN Water Quality Data from WQP
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Abigail", "Volk", , "abigailrvolk@gmail.com", role = c("aut", "cre"))
+Description: Convenience functions to pull GRYN water quality data from the water quality portal
+    and analyze the results. 
+License: CC0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
     dataRetrieval
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
