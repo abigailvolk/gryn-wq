@@ -12,7 +12,7 @@ generate_gryn_sites(
 )
 }
 \arguments{
-\item{sites}{Optional. A vector of WQP of site IDs,
+\item{sites}{A vector of WQP of site IDs,
 e.g. c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"). Defaults to GRYN WQ sites.}
 }
 \value{
