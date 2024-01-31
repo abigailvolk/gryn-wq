@@ -5,7 +5,7 @@
 \title{Saves the GYRN historical and current WQ sites as a list.}
 \usage{
 generate_gryn_sites(
-  sites = c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02",
+  siteIDs = c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02",
     "11NPSWRD_WQX-YELL_MDR", "11NPSWRD_WQX-YELL_MD133.2T", "11NPSWRD_WQX-YELL_LM000.5M",
     "11NPSWRD_WQX-YELL_SB015.7A", "11NPSWRD_WQX-YELL_YS549.7M", "11NPSWRD_WQX-BICA_BHR2",
     "11NPSWRD_WQX-BICA_BHR1", "11NPSWRD_WQX-BICA_SHR1")
@@ -22,6 +22,6 @@ A list of the site names, where each element of the list is a site name.
 Saves the GYRN historical and current WQ sites as a list.
 }
 \examples{
-generate_gryn_sites()
-generate_gryn_sites(sites = c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"))
+generate_gryn_siteIDs()
+generate_gryn_siteIDs(siteIDs = c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"))
 }

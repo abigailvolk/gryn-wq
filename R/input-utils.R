@@ -7,9 +7,9 @@
 #' @export
 #'
 #' @examples
-#' generate_gryn_sites()
-#' generate_gryn_sites(sites = c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"))
-generate_gryn_sites <- function(sites = c("11NPSWRD_WQX-GRTE_SNR01",
+#' generate_gryn_siteIDs()
+#' generate_gryn_siteIDs(siteIDs = c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"))
+generate_gryn_sites <- function(siteIDs = c("11NPSWRD_WQX-GRTE_SNR01",
                                           "11NPSWRD_WQX-GRTE_SNR02",
                                           "11NPSWRD_WQX-YELL_MDR",
                                           "11NPSWRD_WQX-YELL_MD133.2T",
@@ -19,7 +19,7 @@ generate_gryn_sites <- function(sites = c("11NPSWRD_WQX-GRTE_SNR01",
                                           "11NPSWRD_WQX-BICA_BHR2",
                                           "11NPSWRD_WQX-BICA_BHR1",
                                           "11NPSWRD_WQX-BICA_SHR1")) {
-  as.list(sites)
+  as.list(siteIDs)
 }
 
 #' Pull Site Data from the WQ Portal
@@ -49,7 +49,7 @@ grab_wq_data <- function(site_list, data_profile = "resultPhysChem", progress_ba
 #' @export
 #'
 #' @examples
-#' gryn_dfs <- grab_gryn_data()
+#' site_list_gryn <- grab_gryn_data()
 grab_gryn_data <- function(){
   sites <- generate_gryn_sites()
   grab_wq_data(sites)
@@ -72,8 +72,18 @@ select_fields <- function(site) {
 }
 
 
+#' Selects relevant fields from each data frame in WQP pull list
+#'
+#' @param site_list the list of data frames pulled from WQP
+#'
+#' @return updated site_list of data frames
+#' @export
+#'
+#' @examples
+#' site_list <- grab_gryn_data()
+#' site_list <- select_fields_site_list(site_list)
 select_fields_site_list <- function(site_list){
-  data <- site_list |>
+  site_list |>
     purrr::map(\(x) select_fields(site = x))
 }
 
