@@ -4,12 +4,15 @@
 \alias{grab_wq_data}
 \title{Pull Site Data from the WQ Portal}
 \usage{
-grab_wq_data(site_list, data_profile = "resultPhysChem")
+grab_wq_data(site_list, data_profile = "resultPhysChem", progress_bar = TRUE)
 }
 \arguments{
 \item{site_list}{A list of WQP site IDs}
 
 \item{data_profile}{The type of data to pull. Default is physical/chemical.}
+
+\item{progress_bar}{T/F. Do you want to display a progress bar? Helpful if you
+expect the pull to take a long time. Default = T.}
 }
 \value{
 A list of WQP data frames for input site IDs
