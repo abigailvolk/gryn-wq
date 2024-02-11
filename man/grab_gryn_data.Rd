@@ -13,5 +13,5 @@ a list of GRYN monitored WQP data frames
 Pull all GRYN sites into a list
 }
 \examples{
-site_list_gryn <- grab_gryn_data()
+gryn_site_dfs <- grab_gryn_data()
 }

@@ -21,6 +21,6 @@ A list of WQP data frames for input site IDs
 Pull Site Data from the WQ Portal
 }
 \examples{
-site_name_list <- as.list(c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"))
-site_df_list <- grab_wq_data(site_name_list)
+site_list <- as.list(c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"))
+site_dfs <- grab_wq_data(site_list)
 }

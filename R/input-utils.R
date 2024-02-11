@@ -7,9 +7,9 @@
 #' @export
 #'
 #' @examples
-#' generate_gryn_siteIDs()
-#' generate_gryn_siteIDs(siteIDs = c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"))
-generate_gryn_sites <- function(siteIDs = c("11NPSWRD_WQX-GRTE_SNR01",
+#' generate_gryn_sites()
+#' generate_gryn_sites(sites = c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"))
+generate_gryn_sites <- function(sites = c("11NPSWRD_WQX-GRTE_SNR01",
                                           "11NPSWRD_WQX-GRTE_SNR02",
                                           "11NPSWRD_WQX-YELL_MDR",
                                           "11NPSWRD_WQX-YELL_MD133.2T",
@@ -19,7 +19,11 @@ generate_gryn_sites <- function(siteIDs = c("11NPSWRD_WQX-GRTE_SNR01",
                                           "11NPSWRD_WQX-BICA_BHR2",
                                           "11NPSWRD_WQX-BICA_BHR1",
                                           "11NPSWRD_WQX-BICA_SHR1")) {
-  as.list(siteIDs)
+  stopifnot("`sites` must be a character" = is.character(sites))
+  stopifnot("`sites` must be a vector." = is.vector(sites))
+  site_list <- as.list(sites)
+  names(site_list) <- sites
+  return(site_list)
 }
 
 #' Pull Site Data from the WQ Portal
@@ -33,13 +37,14 @@ generate_gryn_sites <- function(siteIDs = c("11NPSWRD_WQX-GRTE_SNR01",
 #' @export
 #'
 #' @examples
-#' site_name_list <- as.list(c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"))
-#' site_df_list <- grab_wq_data(site_name_list)
+#' site_list <- as.list(c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"))
+#' site_dfs <- grab_wq_data(site_list)
 grab_wq_data <- function(site_list, data_profile = "resultPhysChem", progress_bar = TRUE){
-  data <- site_list |>
+  site_dfs <- site_list |>
     purrr::map(\(x) dataRetrieval::readWQPdata(siteid = x,
                                                dataProfile = data_profile),
                .progress = progress_bar)
+  return(site_dfs)
 }
 
 
@@ -49,10 +54,11 @@ grab_wq_data <- function(site_list, data_profile = "resultPhysChem", progress_ba
 #' @export
 #'
 #' @examples
-#' site_list_gryn <- grab_gryn_data()
+#' gryn_site_dfs <- grab_gryn_data()
 grab_gryn_data <- function(){
-  sites <- generate_gryn_sites()
-  grab_wq_data(sites)
+  gryn_site_list <- generate_gryn_sites()
+  gryn_site_dfs <- grab_wq_data(site_list)
+  return(gryn_site_dfs)
 }
 
 #' Selects relevant fields from WQP pull
