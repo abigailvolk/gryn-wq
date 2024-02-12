@@ -40,6 +40,7 @@ generate_gryn_sites <- function(sites = c("11NPSWRD_WQX-GRTE_SNR01",
 #' site_list <- as.list(c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"))
 #' site_dfs <- grab_wq_data(site_list)
 grab_wq_data <- function(site_list, data_profile = "resultPhysChem", progress_bar = TRUE){
+  stopifnot("`site_list` must be a list" = is.list(site_list))
   site_dfs <- site_list |>
     purrr::map(\(x) dataRetrieval::readWQPdata(siteid = x,
                                                dataProfile = data_profile),
@@ -47,19 +48,6 @@ grab_wq_data <- function(site_list, data_profile = "resultPhysChem", progress_ba
   return(site_dfs)
 }
 
-
-#' Pull all GRYN sites into a list
-#'
-#' @return a list of GRYN monitored WQP data frames
-#' @export
-#'
-#' @examples
-#' gryn_site_dfs <- grab_gryn_data()
-grab_gryn_data <- function(){
-  gryn_site_list <- generate_gryn_sites()
-  gryn_site_dfs <- grab_wq_data(site_list)
-  return(gryn_site_dfs)
-}
 
 #' Selects relevant fields from WQP pull
 #'
@@ -71,10 +59,12 @@ grab_gryn_data <- function(){
 #' @examples
 #' MDR1 <- dataRetrieval::readWQPdata(siteid = "11NPSWRD_WQX-YELL_MDR",
 #' dataProfile = "resultPhysChem")
-#' MDR1 <- select_fields(MDR1)
-select_fields <- function(site) {
+#' MDR1 <- remove_fields(MDR1)
+remove_fields <- function(site) {
+  remove_na_columns <- function(x) any(!is.na(x))
   site |>
-    dplyr::select(LaboratoryName)
+    dplyr::select_if(remove_na_columns) |>
+    dplyr::select(!dplyr::contains("Depth"))
 }
 
 
@@ -87,9 +77,24 @@ select_fields <- function(site) {
 #'
 #' @examples
 #' site_list <- grab_gryn_data()
-#' site_list <- select_fields_site_list(site_list)
-select_fields_site_list <- function(site_list){
+#' site_list <- remove_fields_site_list(site_list)
+remove_fields_site_list <- function(site_list){
+  stopifnot("`site_list` must be a list" = is.list(site_list))
   site_list |>
-    purrr::map(\(x) select_fields(site = x))
+    purrr::map(\(x) remove_fields(site = x))
 }
 
+
+#' Pull all GRYN data into a list
+#'
+#' @return a list of GRYN monitored WQP data frames
+#' @export
+#'
+#' @examples
+#' gryn_site_dfs <- grab_gryn_data()
+grab_gryn_data <- function(){
+  gryn_site_list <- generate_gryn_sites()
+  gryn_site_dfs <- grab_wq_data(gryn_site_list)
+  gryn_site_dfs <- remove_fields_site_list(gryn_site_dfs)
+  return(gryn_site_dfs)
+}

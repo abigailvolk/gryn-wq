@@ -2,7 +2,7 @@
 % Please edit documentation in R/input-utils.R
 \name{grab_gryn_data}
 \alias{grab_gryn_data}
-\title{Pull all GRYN sites into a list}
+\title{Pull all GRYN data into a list}
 \usage{
 grab_gryn_data()
 }
@@ -10,7 +10,7 @@ grab_gryn_data()
 a list of GRYN monitored WQP data frames
 }
 \description{
-Pull all GRYN sites into a list
+Pull all GRYN data into a list
 }
 \examples{
 gryn_site_dfs <- grab_gryn_data()
