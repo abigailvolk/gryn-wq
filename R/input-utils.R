@@ -64,23 +64,26 @@ remove_fields <- function(site) {
   remove_na_columns <- function(x) any(!is.na(x))
   site |>
     dplyr::select_if(remove_na_columns) |>
-    dplyr::select(!dplyr::contains("Depth"))
+    dplyr::select(!dplyr::contains("Depth")) |>
+    tidyr::unite("CharacteristicName.MethodSpec", CharacteristicName, MethodSpeciationName,
+                 sep = " ", na.rm = TRUE)
 }
 
 
 #' Selects relevant fields from each data frame in WQP pull list
 #'
-#' @param site_list the list of data frames pulled from WQP
+#' @param site_dfs the list of data frames pulled from WQP
 #'
-#' @return updated site_list of data frames
+#' @return updated list of site data frames
 #' @export
 #'
 #' @examples
-#' site_list <- grab_gryn_data()
-#' site_list <- remove_fields_site_list(site_list)
-remove_fields_site_list <- function(site_list){
-  stopifnot("`site_list` must be a list" = is.list(site_list))
-  site_list |>
+#' site_list <- as.list(c("11NPSWRD_WQX-GRTE_SNR01", "11NPSWRD_WQX-GRTE_SNR02"))
+#' site_dfs <- grab_wq_data(site_list)
+#' site_dfs <- remove_fields_site_dfs(site_dfs)
+remove_fields_site_dfs <- function(site_dfs){
+  stopifnot("`site_dfs` must be a list" = is.list(site_dfs))
+  site_dfs |>
     purrr::map(\(x) remove_fields(site = x))
 }
 
@@ -95,6 +98,6 @@ remove_fields_site_list <- function(site_list){
 grab_gryn_data <- function(){
   gryn_site_list <- generate_gryn_sites()
   gryn_site_dfs <- grab_wq_data(gryn_site_list)
-  gryn_site_dfs <- remove_fields_site_list(gryn_site_dfs)
+  gryn_site_dfs <- remove_fields_site_dfs(gryn_site_dfs)
   return(gryn_site_dfs)
 }
