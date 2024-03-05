@@ -1,4 +1,4 @@
-wrangle_sample_number <- function(site){
+wrangle_samples_yr <- function(site){
   site |>
     dplyr::mutate(Year = lubridate::year(ActivityStartDate)) |>
     dplyr::filter(ActivityTypeCode == "Field Msr/Obs" |
@@ -7,5 +7,6 @@ wrangle_sample_number <- function(site){
                     ActivityTypeCode,
                     CharacteristicName.MethodSpec,
                     ResultSampleFractionText) |>
-    dplyr::summarize(`Number of Samples` = dplyr::n())
+    dplyr::summarize(`Number of Samples` = dplyr::n(),
+                     `Number of flags` = sum(!is.na(MeasureQualifierCode)) )
 }

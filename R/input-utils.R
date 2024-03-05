@@ -66,6 +66,9 @@ remove_fields <- function(site) {
     dplyr::select_if(remove_na_columns) |>
     dplyr::select(!dplyr::contains("Depth")) |>
     tidyr::unite("CharacteristicName.MethodSpec", CharacteristicName, MethodSpeciationName,
+                 sep = " ", na.rm = TRUE) |>
+    tidyr::unite("Characteristic Name", CharacteristicName.MethodSpec,
+                 ResultSampleFractionText,
                  sep = " ", na.rm = TRUE)
 }
 
