@@ -69,7 +69,8 @@ remove_fields <- function(site) {
                  sep = " ", na.rm = TRUE) |>
     tidyr::unite("Characteristic Name", CharacteristicName.MethodSpec,
                  ResultSampleFractionText,
-                 sep = " ", na.rm = TRUE)
+                 sep = " ", na.rm = TRUE) |>
+    dplyr::mutate(Year = lubridate::year(ActivityStartDate))
 }
 
 
